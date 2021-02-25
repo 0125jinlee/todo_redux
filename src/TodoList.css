@@ -1,0 +1,39 @@
+.List {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333333;
+}
+
+.ClearBtn {
+  text-align: center;
+  cursor: pointer;
+  border-color: #80cfa9;
+  background: transparent;
+  color: #80cfa9;
+  margin-top: 1.5rem;
+  overflow: visible;
+  border: 1px solid #80cfa9;
+  padding: 0.375rem 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ClearBtn:hover {
+  color: #333333;
+  background: #80cfa9;
+}
+
+.ClearBtn:focus {
+  outline: 0;
+  border: solid 2px #80cfa9;
+}

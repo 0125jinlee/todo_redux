@@ -1,0 +1,64 @@
+.TodoItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.TodoItem h5 {
+  width: 75%;
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.TodoItemIcons {
+  display: flex;
+}
+
+.EditItem {
+  width: 100%;
+  line-height: 1.5;
+  text-align: left;
+  background: transparent;
+  padding-left: 0.5em;
+  font-size: 1.25rem;
+  border-radius: 0.25rem;
+  border: solid 1px #80cfa9;
+}
+
+.EditItem:focus {
+  outline: 0;
+  border: solid 2px #80cfa9;
+}
+
+.CheckIcon {
+  color: #80cfa9;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.EditIcon {
+  color: #11b5e4;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.DeleteIcon {
+  color: #d62828;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
