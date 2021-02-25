@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
+
+import { add } from "./data/todoSlice";
 
 import "./Input.css";
 
-const Input = (props) => {
+const Input = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [input, setInput] = useState("");
+
+  const dispatch = useDispatch();
 
   const inputHandler = (e) => {
     setInput(e.target.value);
@@ -16,7 +22,14 @@ const Input = (props) => {
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 4000);
     } else {
-      props.addItemHandler(input);
+      dispatch(
+        add({
+          id: nanoid(),
+          onEdit: false,
+          onCheck: false,
+          value: input,
+        })
+      );
     }
   };
 

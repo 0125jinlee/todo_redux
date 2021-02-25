@@ -26,7 +26,7 @@ const Todo = (props) => {
         }
       >
         {props.onEdit ? (
-          <form onSubmit={() => props.editedInputHandler(index, newInput)}>
+          <form onSubmit={() => props.editInputHandler(index, newInput)}>
             <input
               type="text"
               className="EditItem"
@@ -42,19 +42,19 @@ const Todo = (props) => {
         <FontAwesomeIcon
           className="CheckIcon"
           icon={faCheckCircle}
-          onClick={props.onCheckHandler}
+          onClick={props.checkHandler}
           style={props.onCheck ? { opacity: "0.5" } : { opacity: "1" }}
         />
         <FontAwesomeIcon
           className="EditIcon"
           icon={faEdit}
-          onClick={props.onEditHandler}
+          onClick={props.editHandler}
           style={props.onEdit ? { opacity: "0.5" } : { opacity: "1" }}
         />
         <FontAwesomeIcon
           className="DeleteIcon"
           icon={faTimesCircle}
-          onClick={props.onDeleteHandler}
+          onClick={props.removeHanlder}
         />
       </div>
     </div>

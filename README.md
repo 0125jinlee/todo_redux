@@ -1,1 +1,1 @@
-Jin's 100 JS Projects Challenge
+Simple To Do App using React and Redux

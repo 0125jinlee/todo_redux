@@ -1,72 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { check, edit, editInput, remove, clear } from "./data/todoSlice";
 
 import Input from "./Input.js";
 import Todo from "./Todo";
 import "./TodoList.css";
 
 const TodoList = () => {
-  const [list, setList] = useState([]);
+  const list = useSelector((state) => state.list);
 
-  const addItemHandler = (input) => {
-    let arr = [...list];
-    arr.push({ onEdit: false, onCheck: false, value: input });
-    setList(arr);
-  };
+  const dispatch = useDispatch();
 
-  const onCheckHandler = (index) => {
-    let arr = [...list];
-    arr[index].onEdit = false;
-    arr[index].onCheck = !arr[index].onCheck;
-    setList(arr);
-  };
-
-  const onEditHandler = (index) => {
-    let arr = [...list];
-    arr[index].onCheck = false;
-    arr[index].onEdit = !arr[index].onEdit;
-    setList(arr);
-  };
-
-  const onDeleteHandler = (index) => {
-    let arr = [...list];
-    arr.splice(index, 1);
-    setList(arr);
-  };
-
-  const editedInputHandler = (index, newInput) => {
-    let arr = [...list];
-    arr[index].value = newInput;
-    arr[index].onEdit = false;
-    setList(arr);
-  };
-
-  const clearBtnHandler = () => {
-    setList([]);
+  const editInputHandler = (index, newInput) => {
+    dispatch(editInput(newInput));
   };
 
   if (Array.isArray(list) && list.length !== 0) {
     const updatedList = list.map((element, index) => {
       return (
         <Todo
-          element={element}
-          value={element.value}
+          id={element.id}
+          index={index}
           onCheck={element.onCheck}
           onEdit={element.onEdit}
-          index={index}
-          key={index + element.value}
-          onCheckHandler={() => onCheckHandler(index)}
-          onEditHandler={() => onEditHandler(index)}
-          onDeleteHandler={() => onDeleteHandler(index)}
-          editedInputHandler={editedInputHandler}
+          value={element.value}
+          checkHandler={dispatch(() => check())}
+          editHandler={dispatch(() => edit())}
+          removeHandler={dispatch(() => remove())}
+          editInputHandler={editInputHandler}
         />
       );
     });
     return (
       <span>
-        <Input addItemHandler={addItemHandler} />
+        <Input />
         <div className="List">
           {updatedList}
-          <button type="button" className="ClearBtn" onClick={clearBtnHandler}>
+          <button type="button" className="ClearBtn" onClick={dispatch(clear)}>
             Clear Items
           </button>
         </div>
@@ -75,9 +46,9 @@ const TodoList = () => {
   } else {
     return (
       <span>
-        <Input addItemHandler={addItemHandler} />
+        <Input />
         <div className="List">
-          <button type="button" className="ClearBtn" onClick={clearBtnHandler}>
+          <button type="button" className="ClearBtn" onClick={dispatch(clear)}>
             Clear Items
           </button>
         </div>
