@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { check, edit, editInput, remove, clear } from "./data/todoSlice";
+import { clear } from "./data/todoSlice";
 
 import Input from "./Input.js";
 import Todo from "./Todo";
@@ -12,23 +12,15 @@ const TodoList = () => {
 
   const dispatch = useDispatch();
 
-  const editInputHandler = (index, newInput) => {
-    dispatch(editInput(newInput));
-  };
-
   if (Array.isArray(list) && list.length !== 0) {
-    const updatedList = list.map((element, index) => {
+    const updatedList = list.map((item) => {
       return (
         <Todo
-          id={element.id}
-          index={index}
-          onCheck={element.onCheck}
-          onEdit={element.onEdit}
-          value={element.value}
-          checkHandler={dispatch(() => check())}
-          editHandler={dispatch(() => edit())}
-          removeHandler={dispatch(() => remove())}
-          editInputHandler={editInputHandler}
+          key={item.id}
+          id={item.id}
+          checkClicked={item.checkClicked}
+          editClicked={item.editClicked}
+          value={item.value}
         />
       );
     });
@@ -37,7 +29,11 @@ const TodoList = () => {
         <Input />
         <div className="List">
           {updatedList}
-          <button type="button" className="ClearBtn" onClick={dispatch(clear)}>
+          <button
+            type="button"
+            className="ClearBtn"
+            onClick={() => dispatch(clear())}
+          >
             Clear Items
           </button>
         </div>
@@ -48,7 +44,11 @@ const TodoList = () => {
       <span>
         <Input />
         <div className="List">
-          <button type="button" className="ClearBtn" onClick={dispatch(clear)}>
+          <button
+            type="button"
+            className="ClearBtn"
+            onClick={() => dispatch(clear())}
+          >
             Clear Items
           </button>
         </div>

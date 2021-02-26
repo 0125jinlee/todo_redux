@@ -10,16 +10,30 @@ const todoSlice = createSlice({
       state.push(action.payload);
     },
     check: (state, action) => {
-      state[action.payload].onEdit = false;
-      state[action.payload].onCheck = !state[action.payload].onCheck;
+      const id = action.payload;
+      const index = state.findIndex((item) => item.id === id);
+      const item = state[index];
+      if (item) {
+        item.editClicked = false;
+        item.checkClicked = !item.checkClicked;
+      }
     },
     edit: (state, action) => {
-      state[action.payload].onCheck = false;
-      state[action.payload].onEdit = !state[action.payload].onEdit;
+      const id = action.payload;
+      const index = state.findIndex((item) => item.id === id);
+      const item = state[index];
+      if (item) {
+        item.checkClicked = false;
+        item.editClicked = !item.editClicked;
+      }
     },
     editInput: (state, action) => {
-      state[action.payload].value = action.newInput;
-      state[action.payload].onEdit = false;
+      const id = action.payload;
+      const index = state.findIndex((item) => item.id === id);
+      const item = state[index];
+      if (item) {
+        item.value = action.payload.newValue;
+      }
     },
     remove: (state, action) => {
       state.splice(action.payload, 1);

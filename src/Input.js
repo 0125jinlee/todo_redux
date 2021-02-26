@@ -25,8 +25,8 @@ const Input = () => {
       dispatch(
         add({
           id: nanoid(),
-          onEdit: false,
-          onCheck: false,
+          editClicked: false,
+          checkClicked: false,
           value: input,
         })
       );

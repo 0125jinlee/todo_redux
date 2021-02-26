@@ -1,37 +1,48 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faEdit,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
+
+import { check, edit, editInput, remove } from "./data/todoSlice";
 
 import "./Todo.css";
 
 const Todo = (props) => {
-  const [index] = useState(props.index);
-  const [newInput, setNewInput] = useState("");
+  const [newValue, setNewValue] = useState("");
 
-  const setNewInputHandler = (e) => {
-    setNewInput(e.target.value);
+  const dispatch = useDispatch();
+
+  const setnewValueHandler = (e) => {
+    setNewValue(e.target.value);
+  };
+
+  const editInputHandler = (newValue) => {
+    if (newValue) {
+      dispatch(editInput(newValue));
+    }
   };
 
   return (
     <div className="TodoItem">
       <h5
         style={
-          props.onCheck
+          props.checkClicked
             ? { color: "gray", textDecorationLine: "line-through" }
             : null
         }
       >
-        {props.onEdit ? (
-          <form onSubmit={() => props.editInputHandler(index, newInput)}>
+        {props.editClicked ? (
+          <form onSubmit={() => editInputHandler(newValue)}>
             <input
               type="text"
               className="EditItem"
               placeholder={props.value}
-              onChange={setNewInputHandler}
+              onChange={setnewValueHandler}
             />
           </form>
         ) : (
@@ -42,23 +53,29 @@ const Todo = (props) => {
         <FontAwesomeIcon
           className="CheckIcon"
           icon={faCheckCircle}
-          onClick={props.checkHandler}
+          onClick={() => dispatch(check(props.id))}
           style={props.onCheck ? { opacity: "0.5" } : { opacity: "1" }}
         />
         <FontAwesomeIcon
           className="EditIcon"
           icon={faEdit}
-          onClick={props.editHandler}
+          onClick={() => dispatch(edit(props.id))}
           style={props.onEdit ? { opacity: "0.5" } : { opacity: "1" }}
         />
         <FontAwesomeIcon
           className="DeleteIcon"
           icon={faTimesCircle}
-          onClick={props.removeHanlder}
+          onClick={() => dispatch(remove(props.id))}
         />
       </div>
     </div>
   );
+};
+
+Todo.propTypes = {
+  checkClicked: PropTypes.bool,
+  editClicked: PropTypes.bool,
+  value: PropTypes.string,
 };
 
 export default Todo;
