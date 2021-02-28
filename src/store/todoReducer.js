@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const todoAdded = (state, action) => {
-  return { ...state, list: [state.list, action.payload] };
+  return { ...state, list: [...state.list, action.item] };
 };
 
 const todoChecked = (state, action) => {
