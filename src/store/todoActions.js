@@ -21,6 +21,14 @@ export const todoEdited = (id) => {
   };
 };
 
+export const todoEditedValueSubmitted = (id, editedValue) => {
+  return {
+    type: actionTypes.TODO_EDITED_VALUE_SUBMITTED,
+    id: id,
+    editedValue: editedValue,
+  };
+};
+
 export const todoRemoved = (id) => {
   return {
     type: actionTypes.TODO_REMOVED,

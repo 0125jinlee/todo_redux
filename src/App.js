@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 
-import TodoItem from "./TodoItem";
+import TodoList from "./TodoList";
 import * as actions from "./store/index";
 import "./App.css";
 
@@ -13,81 +13,62 @@ const App = (props) => {
     setValue(e.target.value);
   };
 
-  const addBtnHandler = () => {
-    const item = {
-      id: nanoid(),
-      checkClicked: false,
-      editClicked: false,
-      value: value,
-    };
-    props.todoAdded(item);
+  const addBtnHandler = (e) => {
+    e.preventDefault();
+    if (value) {
+      const item = {
+        id: nanoid(),
+        checkClicked: false,
+        editClicked: false,
+        value: value,
+      };
+      props.todoAdded(item);
+    }
   };
 
-  if (props.list.length > 0) {
-    const todolist = props.list.map((item) => {
-      return (
-        <TodoItem
-          id={item.id}
-          value={item.value}
-          checkClicked={item.checkClicked}
-          editClicked={item.editClicked}
-        />
-      );
-    });
+  const allCompleteBtnHandler = (e) => {
+    e.preventDefault();
+    props.todoAllCompleted();
+  };
 
-    return (
-      <div className="App">
-        <div className="Container">
-          <div className="Title">
-            <h1>TO DO LIST</h1>
-          </div>
-          <form className="AddItem">
-            <input
-              placeholder="Add Item..."
-              onChange={(e) => inputHandler(e)}
-            />
-            <button onClick={addBtnHandler}>ADD</button>
-          </form>
-          <div className="List">{todolist}</div>
-          <div className="BatchSelection">
-            <button className="CompleteBtn">All Complete</button>
-            <button className="ClearBtn">All Clear</button>
-          </div>
+  const allClearBtnHandler = (e) => {
+    e.preventDefault();
+    props.todoAllCleared();
+  };
+
+  return (
+    <div className="App">
+      <div className="Container">
+        <div className="Title">
+          <h1>TO DO LIST</h1>
+        </div>
+        <form className="AddItem">
+          <input placeholder="Add Item..." onChange={(e) => inputHandler(e)} />
+          <button onClick={(e) => addBtnHandler(e)}>ADD</button>
+        </form>
+        <TodoList />
+        <div className="BatchSelection">
+          <button
+            className="CompleteBtn"
+            onClick={(e) => allCompleteBtnHandler(e)}
+          >
+            All Complete
+          </button>
+          <button className="ClearBtn" onClick={(e) => allClearBtnHandler(e)}>
+            All Clear
+          </button>
         </div>
       </div>
-    );
-  } else {
-    return (
-      <div className="App">
-        <div className="Container">
-          <div className="Title">
-            <h1>TO DO LIST</h1>
-          </div>
-          <form className="AddItem">
-            <input
-              placeholder="Add Item..."
-              onChange={(e) => inputHandler(e)}
-            />
-            <button onClick={addBtnHandler}>ADD</button>
-          </form>
-          <div className="BatchSelection">
-            <button className="CompleteBtn">All Complete</button>
-            <button className="ClearBtn">All Clear</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 };
-
-const mapStateToProps = (state) => ({
-  list: state.list,
-});
 
 const mapDispatchToProps = (dispatch) => {
   return {
     todoAdded: (item) => dispatch(actions.todoAdded(item)),
+    todoAllCleared: () => dispatch(actions.todoAllCleared()),
+    todoAllCompleted: () => dispatch(actions.todoAllCompleted()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
